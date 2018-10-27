@@ -77,7 +77,7 @@ The sample already includes support for report state. To use it, create a device
 in the web frontend. Then click on the arrow icon in the top-right corner. It will
 start reporting state when the state changes locally.
 
-#### Setup sample service
+#### Setup sample service (without Docker)
 
 1. Set up the web portal
 
@@ -106,6 +106,24 @@ start reporting state when the state changes locally.
 1. This is a web portal to your Smart Home devices. Configure the smart lights
 shown as you please. Click the cloud icon shown above at least one of them to
 enable it for cloud control.
+
+#### Setup sample service (with Docker)
+The smart-home-provider project can be started with [docker-compose](https://docs.docker.com/compose/) and TLS certificates issued by [LetsEncrypt](https://letsencrypt.org/)
+
+1. Create the `.env` file (the file `.env_example` provides example values)
+
+      | Environment Variable           | Description                        |
+      | -------------------------------|------------------------------------|
+      | FQDN                           | The FQDN to be used for LetsEncrypt. This must be resolvable to the host before starting
+      | LE_CONTACT_EMAIL               | The adminstrative email used for the certificate
+      | API_KEY                        | The HomeGraph API value
+      | CLIENT_ID                      | Client ID used for OAuth authentication
+      | CLIENT_SECRET                  | Client Secret used for OAuth authentication
+      | ENABLE_RESET                   | `true` to reset devices on page reload
+      
+2. Start the docker-compose services
+
+      `docker-compose up -d`
 
 #### Start testing
 

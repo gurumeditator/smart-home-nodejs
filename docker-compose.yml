@@ -1,0 +1,63 @@
+version: '3.1'
+services:
+  nginx-proxy:
+    restart: unless-stopped
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "./data/vhosts.d:/etc/nginx/vhost.d"
+      - "./data/html:/usr/share/nginx/html"
+      - "./data/certs:/etc/nginx/certs:ro"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  letsencrypt-nginx-proxy-companion:
+    restart: unless-stopped
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy-letsencrypt
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./data/vhosts.d:/etc/nginx/vhost.d"
+      - "./data/html:/usr/share/nginx/html"
+      - "./data/certs:/etc/nginx/certs"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  smart-home-provider:
+    build: ./
+    user: "node"
+    working_dir: /home/node/app
+    container_name: smart-home-provider
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=${FQDN}
+      - VIRTUAL_PORT=8081
+      - LETSENCRYPT_HOST=${FQDN}
+      - LETSENCRYPT_EMAIL=${LE_CONTACT_EMAIL}
+      - NODE_ENV=production
+      - API_KEY=${API_KEY}
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - ENABLE_RESET=${ENABLE_RESET}
+    volumes:
+       - ./jwt:/home/node/app/cloud/jwt:ro
+    expose:
+      - "3000"
+    command: "node cloud/smart-home-provider-cloud.js smart-home=\"https://${FQDN}\""
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"

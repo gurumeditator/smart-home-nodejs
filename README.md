@@ -71,7 +71,7 @@ done securely through [JWT (JSON web tokens)](https://jwt.io/).
 1. Navigate to the [Google Cloud Console API & Services page](https://console.cloud.google.com/apis/credentials)
 1. Select **Create Credentials** and create a **Service account key**
 1. Create the account and download a JSON file.
-   Save this as `smart-home-provider/cloud/jwt-key.json`.
+   Save this as `smart-home-provider/cloud/jwt/jwt-key.json`.
 
 The sample already includes support for report state. To use it, create a device
 in the web frontend. Then click on the arrow icon in the top-right corner. It will

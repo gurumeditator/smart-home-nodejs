@@ -18,17 +18,17 @@ let Config = {};
 
 Config.devPortSmartHome = '3000';
 // Client id that Google will use
-Config.smartHomeProviderGoogleClientId = 'ZxjqWpsYj3';
+Config.smartHomeProviderGoogleClientId = process.env.CLIENT_ID || 'ZxjqWpsYj3';
 // Client secret that Google will use
-Config.smartHomeProvideGoogleClientSecret = 'hIMH3uWlMVrqa7FAbKLBoNUMCyLCtv';
+Config.smartHomeProvideGoogleClientSecret = process.env.CLIENT_SECRET || 'hIMH3uWlMVrqa7FAbKLBoNUMCyLCtv';
 // Client API Key generated on the console
-Config.smartHomeProviderApiKey = '<API_KEY>';
+Config.smartHomeProviderApiKey = process.env.API_KEY || '<API_KEY>';
 // Client service key to use for reporting state
-Config.jwt = require('./jwt-key.json');
+Config.jwt = require('./jwt/jwt-key.json');
 // Running server locally using ngrok
 Config.isLocal = false;
 // If true, all devices will be cleared when the frontend page refreshes
-Config.enableReset = true;
+Config.enableReset = process.env.ENABLE_RESET || true;
 
 function init() {
   process.argv.forEach(function(value, i, arr) {

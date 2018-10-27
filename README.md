@@ -121,9 +121,19 @@ The smart-home-provider project can be started with [docker-compose](https://doc
       | CLIENT_SECRET                  | Client Secret used for OAuth authentication
       | ENABLE_RESET                   | `true` to reset devices on page reload
       
-2. Start the docker-compose services
+1. Start the docker-compose services
 
       `docker-compose up -d`
+
+1. In a browser, open the URL entered for the FQDN environment variable.
+1. Log in with one of the sample user accounts, for instance:
+
+       user: rick
+       password: oldman
+
+1. This is a web portal to your Smart Home devices. Configure the smart lights
+shown as you please. Click the cloud icon shown above at least one of them to
+enable it for cloud control.
 
 #### Start testing
 
